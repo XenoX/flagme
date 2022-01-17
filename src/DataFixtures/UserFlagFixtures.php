@@ -38,6 +38,9 @@ class UserFlagFixtures extends Fixture implements DependentFixtureInterface
         ];
     }
 
+    /**
+    * @return array<int, array<string, mixed>>
+    */
     private function getData(): array
     {
         return [
