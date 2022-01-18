@@ -7,12 +7,6 @@ security:
             algorithm: auto
 
 
-
-
-
-
-
-
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -35,6 +29,11 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            custom_authenticator: App\Security\LoginAuthenticator
+            logout:
+                path: app_security_logout
+                # where to redirect after logout
+                # target: app_any_route
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -51,7 +50,6 @@ security:
 
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
     security:

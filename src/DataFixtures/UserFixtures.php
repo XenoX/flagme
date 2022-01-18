@@ -34,6 +34,9 @@ class UserFixtures extends Fixture
         $manager->flush();
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+    */
     private function getData(): array
     {
         return [

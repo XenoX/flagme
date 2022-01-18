@@ -17,11 +17,11 @@ class UserFlag
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'userFlags')]
     #[ORM\JoinColumn(nullable: true)]
-    private User $user;
+    private ?User $user;
 
     #[ORM\ManyToOne(targetEntity: Flag::class, inversedBy: 'userFlags')]
     #[ORM\JoinColumn(nullable: true)]
-    private Flag $flag;
+    private ?Flag $flag;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeInterface $flaggedAt;
@@ -36,24 +36,24 @@ class UserFlag
         return $this->id;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getFlag(): Flag
+    public function getFlag(): ?Flag
     {
         return $this->flag;
     }
 
-    public function setFlag(Flag $flag): self
+    public function setFlag(?Flag $flag): self
     {
         $this->flag = $flag;
 
