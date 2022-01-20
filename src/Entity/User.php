@@ -37,6 +37,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserFlag::class)]
     private Collection $userFlags;
 
+    public function __toString(): string
+    {
+        return $this->username;
+    }
+
     public function __construct()
     {
         $this->userFlags = new ArrayCollection();
