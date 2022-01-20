@@ -24,6 +24,11 @@ class Session
     #[ORM\OneToMany(mappedBy: 'session', targetEntity: User::class)]
     private Collection $users;
 
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
