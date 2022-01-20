@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Session;
 use App\Entity\User;
+use App\Entity\Flag;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -29,5 +30,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Sessions', 'fas fa-list', Session::class);
         yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);
+        yield MenuItem::linkToCrud('Flags', 'fas fa-flag', Flag::class);
     }
 }
