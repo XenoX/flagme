@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add flag{% endblock %}
+
+{% block body %}
+    <div class="container-fluid h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3 mt-5">
+                <h1>Add a flag</h1>
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_row(form.value) }}
+                </div>
+                <br>
+                <button type="submit" class="btn btn-dark"> Add </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
