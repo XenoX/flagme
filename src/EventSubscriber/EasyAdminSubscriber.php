@@ -8,31 +8,36 @@ use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class EasyAdminSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private UserRepository $userRepository)
+    public function __construct(private UserRepository $userRepository, private UserPasswordHasherInterface $hasher)
     {
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
-            BeforeEntityPersistedEvent::class => ['handleUsersOnCreate'],
+            BeforeEntityPersistedEvent::class => ['handlePrePersist'],
             BeforeEntityUpdatedEvent::class => ['handleUsersOnUpdate'],
         ];
     }
 
-    public function handleUsersOncreate(BeforeEntityPersistedEvent $event): void
+    public function handlePrePersist(BeforeEntityPersistedEvent $event): void
     {
-        $session = $event->getEntityInstance();
-        if (!$session instanceof Session) {
+        $object = $event->getEntityInstance();
+
+        if ($object instanceof User) {
+            $this->cryptPasswordOnUser($object);
+
             return;
         }
 
-        /** @var User $user */
-        foreach ($session->getUsers() as $user) {
-            $user->setSession($session);
+        if ($object instanceof Session) {
+            $this->setSessionOnUsers($object);
+
+            return;
         }
     }
 
@@ -48,6 +53,18 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         }
 
         /** @var User $user */
+        foreach ($session->getUsers() as $user) {
+            $user->setSession($session);
+        }
+    }
+
+    private function cryptPasswordOnUser(User $user): void
+    {
+        $user->setPassword($this->hasher->hashPassword($user, $user->getPassword()));
+    }
+
+    private function setSessionOnUsers(Session $session): void
+    {
         foreach ($session->getUsers() as $user) {
             $user->setSession($session);
         }

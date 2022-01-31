@@ -48,8 +48,8 @@ security:
         ROLE_USER:
 
     access_control:
+         - { path: ^/$, roles: ROLE_USER }
          - { path: ^/admin, roles: ROLE_ADMIN }
-
 when@test:
     security:
         password_hashers:
