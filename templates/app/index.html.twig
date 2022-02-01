@@ -33,7 +33,7 @@
                     <tr>
                         <div>
                             <td>
-                                <a class="link-dark" href="">{{ user.username }}</a>
+                                <a class="link-dark" href="{{ path('app_user_profile', {"user": user.id}) }}">{{ user.username }}</a>
                             </td>
                             <td style="width: 15%">
                                 {{ user.userFlags|length }}/{{ flags|length }}

@@ -6,7 +6,6 @@ use DateTimeImmutable;
 use App\Entity\Flag;
 use App\Entity\User;
 use App\Entity\UserFlag;
-use App\Entity\Session;
 use App\Form\FlagType;
 use App\Repository\FlagRepository;
 use App\Repository\UserFlagRepository;
@@ -32,7 +31,7 @@ class AppController extends AbstractController
             $flag = $form->get('value')->getData();
 
             if (!$flagExist = $doctrine->getRepository(Flag::class)->findOneBy(['value' => $flag])) {
-                $this->addFlash('danger', 'Ce flag n\'existe pas.');
+                $this->addFlash('danger', 'This flag doesn\'t exist.');
 
                 return $this->redirectToRoute('app_app_index');
             }
@@ -41,7 +40,7 @@ class AppController extends AbstractController
                 $userFlagExist = $doctrine->getRepository(UserFlag::class)
                     ->findOneBy(['flag' => $flagExist, 'user' => $this->getUser()])
             ) {
-                $this->addFlash('danger', 'Ce flag est déjà ajouté.');
+                $this->addFlash('danger', 'This flag has already been added.');
 
                 return $this->redirectToRoute('app_app_index');
             }
@@ -56,7 +55,7 @@ class AppController extends AbstractController
             $doctrine->persist($userFlag);
             $doctrine->flush();
 
-            $this->addFlash('success', 'Félicitations, tu as ajouté un flag !');
+            $this->addFlash('success', 'Congrats, you add a flag !');
         }
 
         $users = $doctrine->getRepository(User::class)->findBy(['session' => $session]);
