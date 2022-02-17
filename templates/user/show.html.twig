@@ -5,29 +5,29 @@
 {% block body %}
     <div class="container h-100">
         {% set total = flags|column('flaggedAt')|length %}
-        <h1>{{ user.username }}'s flags ({{ total }}/{{ flags|length }})</h1>
-        <div class="card-group" style ="text-align:center">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
+        <h2 class="mb-3">{{ user.username }}'s flags ({{ total }}/{{ flags|length }})</h2>
+        <div class="card-group text-center">
+            <div class="row">
                 {% for flag in flags %}
                     {% if flag.flaggedAt is defined %}
-                        <div class="row row-cols-1 row-cols-md-3 g-4">
-                            <div class="card border-success mb-3" style="width: 18rem;">
+                        <div class="col-3">
+                            <div class="card border-success mb-5">
                                 <div class="card-body">
-                                    <h5 class="card-title" style="color:green">{{ flag.name }}</h5>
+                                    <h5 class="card-title text-success">{{ flag.name }}</h5>
                                     <h6 class="card-subtitle mb-2 text-muted">Flagged at:</h6>
                                     <p class="card-text">{{ flag.flaggedAt|date('d/m/Y H:i:s') }}</p>
-                                    <img src="{{ asset('images/yes.png') }}" class="card-img-bottom" style="width:30%">
+                                    <img src="{{ asset('images/yes.png') }}" height="80px" width="80px" alt="">
                                 </div>
                             </div>
                         </div>
                     {% else %}
-                        <div class="row row-cols-1 row-cols-md-3 g-4">
-                            <div class="card border-danger mb-3" style="width: 18rem;">
+                        <div class="col-3">
+                            <div class="card border-danger mb-5">
                                 <div class="card-body">
-                                    <h5 class="card-title" style="color:red"> {{ flag.name }}</h5>
+                                    <h5 class="card-title text-danger"> {{ flag.name }}</h5>
                                     <h6 class="card-subtitle mb-2 text-muted">Flagged at:</h6>
                                     <p class="card-text">Not yet.</p>
-                                    <img src="{{ asset('images/no.png') }}" class="card-img-bottom" style="width:20%">
+                                    <img src="{{ asset('images/no.png') }}" height="80px" width="80px" alt="">
                                 </div>
                             </div>
                         </div>

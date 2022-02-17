@@ -36,9 +36,8 @@ class AppController extends AbstractController
                 return $this->redirectToRoute('app_app_index');
             }
 
-            if (
-                $userFlagExist = $doctrine->getRepository(UserFlag::class)
-                    ->findOneBy(['flag' => $flagExist, 'user' => $this->getUser()])
+            if ($doctrine->getRepository(UserFlag::class)
+                ->findOneBy(['flag' => $flagExist, 'user' => $this->getUser()])
             ) {
                 $this->addFlash('danger', 'This flag has already been added.');
 

@@ -36,8 +36,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         if ($object instanceof Session) {
             $this->setSessionOnUsers($object);
-
-            return;
         }
     }
 
